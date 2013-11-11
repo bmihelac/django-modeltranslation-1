@@ -671,6 +671,15 @@ class FileFieldsTest(ModeltranslationTestBase):
         inst.file_de.delete()
         inst.image_de.delete()
 
+    def test_empty_field(self):
+        inst = models.FileFieldsModel(title="Testtitle")
+        trans_real.activate("en")
+        inst.title = 'title_en'
+        inst.save()
+
+        from django.db.models.fields.files import FieldFile
+        self.assertIsInstance(inst.file, FieldFile)
+
 
 class ForeignKeyFieldsTest(ModeltranslationTestBase):
     @classmethod
